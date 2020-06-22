@@ -1,0 +1,8 @@
+<h2>앨범 목록</h2>
+
+<ul>
+{% for album in albums%}
+  <li>앨범 : {{ album.title }}</li>
+{% endfor %}
+</ul>
+<a href="{% url 'musicians:index' %}">[BACK]</a>
