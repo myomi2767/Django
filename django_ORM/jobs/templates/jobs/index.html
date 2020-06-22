@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block body %}
+  <h1>직업 찾기</h1>
+  <form class="form" action="{% url 'jobs:past_life' %}">
+    <label for="nm">이름 : </label>
+    <input type="text" name="input_name" id="nm">
+    <input class="btn btn-primary" type="submit" value="직업 찾기">
+  </form>
+  <hr>
+  <h2>최근 이용자</h2>
+  <hr>
+  {% for job in jobs %}
+    <p>{{job.name}}님</p>
+    <hr>
+  {% endfor %}
+{% endblock %}

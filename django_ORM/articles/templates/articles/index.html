@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}
+{% endblock %}
+{% block body %}
+  <h1>게시판 목록</h1>
+  <hr>
+  <a href="{% url 'articles:new' %}">글 작성</a>
+  <br>
+  <a href="{% url 'articles:introduce' %}">자기소개</a>
+  <hr>
+  {% for article in articles %}
+    <h3>{{article.pk}}</h3>
+    <p>{{article.title}} :: {{article.content}}</p>
+    <a href="{% url 'articles:detail' article.pk %}">상세보기</a>
+    <hr>
+  {% endfor %}
+{% endblock %}

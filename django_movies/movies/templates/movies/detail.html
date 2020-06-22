@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block body %}
+<h1>상세 페이지</h1>
+<hr>
+<p>{{ movie.pk }}번째 영화</p>
+<h2>{{ movie.title }}</h2>
+<hr>
+<!-- <a href="{% url 'movies:update' movie.pk %}">[UPDATE]</a> -->
+<a href="{% url 'movies:index' %}">[back]</a>
+{% endblock %}

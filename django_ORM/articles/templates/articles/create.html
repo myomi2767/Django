@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}
+{% endblock %}
+{% block body %}
+<h1>작성 결과</h1>
+<hr>
+<h2>제목은 {{ title }}</h2>
+<h3>본문은 {{ content }}</h3>
+<hr>
+<a href="{% url 'articles:index' %}">back</a>
+{% endblock %}
