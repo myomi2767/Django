@@ -11,9 +11,9 @@ class Article(models.Model):
         return f'{self.pk}번째 글, {self.title}-{self.content}'
 
 class Comment(models.Model):
-    # 멤버 변수 = models.외래키(참고하는 객체, 삭제 되었을 때 처리방법)
+    # 멤버 변수 = models.외래키(참조하는 객체, 삭제 되었을 때 처리 방법)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    # 역참조 값 설정 : related_name='comments' 
+    # 역참조 값 설정 related_name='comments'
     content = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
 

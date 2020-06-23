@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{% if request.resolver_match.url_name == 'login' %}
+  <h1>로그인</h1>
+{% elif request.resolver_match.url_name == 'modify' %}
+  <h1>회원수정</h1>
+{% elif request.resolver_match.url_name == 'change_password' %}
+  <h1>비밀번호 변경</h1>
+{% elif request.resolver_match.url_name == 'signup' %}
+  <h1>회원가입</h1>
+{% endif%}
+
+<form action="" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {% if request.resolver_match.url_name == 'login' %}
+    <input type="submit" value="로그인">
+  {% elif request.resolver_match.url_name == 'modify' %}
+    <input type="submit" value="회원수정">
+  {% elif request.resolver_match.url_name == 'change_password' %}
+    <input type="submit" value="비밀번호변경">
+  {% elif request.resolver_match.url_name == 'signup' %}
+    <input type="submit" value="회원가입">
+  {% endif%}
+</form>
+{% endblock %}
