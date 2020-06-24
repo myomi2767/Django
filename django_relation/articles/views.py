@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Article, Comment
 from .forms import ArticleForm, CommentForm
 from IPython import embed
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -31,10 +32,15 @@ def detail(request, article_pk):
 @login_required
 def create(request):
     if request.method == "POST":
-        form = ArticleForm(request.POST)
-        if form.is_valid():
-            article = form.save()
+        article_form = ArticleForm(request.POST, request.FILES)
+        if article_form.is_valid():
+            article = article_form.save(commit=False)
+            article.user = request.user
+            article.save()
+            messages.success(request, '게시글 작성 성공')
             return redirect('articles:detail', article.pk)
+        else: 
+            messages.error(request, '너 잘못된 데이터를 넣었어!')
     else:
         form = ArticleForm()
     context = {
@@ -45,24 +51,31 @@ def create(request):
 @login_required
 def update(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
-    if request.method == "POST":
-        form = ArticleForm(request.POST, instance=article)
-        if form.is_valid():
-            article = form.save()
-            return redirect('articles:detail', article.pk)
+    if article.user == request.user:
+        if request.method == "POST":
+            form = ArticleForm(request.POST, request.FILES, instance=article)
+            if form.is_valid():
+                article = form.save()
+                return redirect('articles:detail', article.pk)
+        else:
+            form = ArticleForm(instance=article)
+        context = {
+            'form': form
+        }
+        return render(request, 'articles/form.html', context)
     else:
-        form = ArticleForm(instance=article)
-    context = {
-        'form': form
-    }
-    return render(request, 'articles/form.html', context)
+        return redirect('articles:detail', article.pk)
 
 @require_POST
 def delete(request, article_pk):
     if request.user.is_authenticated:
         article = get_object_or_404(Article, pk=article_pk)
-        article.delete()
-    return redirect('articles:index')
+        if article.user == request.user:
+            article.delete()
+            return redirect('articles:index')
+        else:
+            return redirect('articles:detail', article.pk)
+    return redirect('articles:login')
 
 @require_POST
 def comment_create(request, article_pk):
@@ -71,6 +84,7 @@ def comment_create(request, article_pk):
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
         comment.article = article
+        comment.user = request.user
         # comment.article_id = article.pk
         comment.save()
         return redirect('articles:detail', article.pk)

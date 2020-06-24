@@ -8,6 +8,12 @@
   <title>Document</title>
 </head>
 <body>
+  {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message.message }}</div>
+      {% endfor %}
+  {% endif %}
+
   {% if user.is_authenticated %}
     <h1>{{ user.username }}</h1>
     <a href="{% url 'accounts:logout' %}">로그아웃</a>
