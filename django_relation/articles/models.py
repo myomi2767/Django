@@ -7,7 +7,6 @@ from imagekit.processors import Thumbnail
 def articles_image_path(instance, filename):
     return f'user_{instance.user.pk}/{filename}'
 
-
 class Article(models.Model):
     title = models.CharField(max_length=150)
     content = models.TextField()
@@ -15,14 +14,24 @@ class Article(models.Model):
     # null = DB 상의 컬럼의 Null
     image = models.ImageField(blank=True, upload_to=articles_image_path)
     image_thumbnail = ImageSpecField(
-        source='image', 
-        processors=[Thumbnail(200, 300)], 
+        source='image',
+        processors=[Thumbnail(200, 300)],
         format='JPEG',
         options={'quality':90}
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    like_users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='like_articles',
+        blank=True
+    )
+    recommend_users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='recommend_articles',
+        blank=True
+    )
 
     def __str__(self):
         return f'{self.pk}번째 글, {self.title}-{self.content}'
