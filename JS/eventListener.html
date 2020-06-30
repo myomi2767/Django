@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>EventListener</h1>
+  <div id="my">
+  </div>
+  <button>Click</button>
+  <script>
+    // 1. 무엇을 event target
+    const myButton = document.querySelector('button')
+    // 2. 언제?
+    // addEventListener(type, function())
+    myButton.addEventListener('click', function(event) {
+      // 3. 어떻게?
+      event.preventDefault()
+      console.log(event)
+      const my = document.querySelector('#my')
+      my.innerHTML = '<h1>뿅!!</h1>'
+    })
+
+    myButton.addEventListener('click', function() {
+      console.log('click')
+    })
+
+    myButton.addEventListener('mouseover', function() {
+      myButton.innerText = '마우스 올렸지롱'
+    })
+
+    myButton.addEventListener('mouseout', function() {
+      myButton.innerText = '마우스 내렸지롱'
+    })
+  </script>
+</body>
+</html>

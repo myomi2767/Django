@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="function">function</button>
+  <button id="arrow-function">arrow function</button>
+
+  <script>
+    const kwFunction = document.querySelector('#function')
+    const arrowFunction = document.querySelector('#arrow-function')
+
+    kwFunction.addEventListener('click', function(event) {
+      console.log("========kwFunction======")
+      console.log(this)
+    })
+    arrowFunction.addEventListener('click', event => {
+      console.log("========kwFunction======")
+      console.log(this)
+    })
+  </script>
+</body>
+</html>

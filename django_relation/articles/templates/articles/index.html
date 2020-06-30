@@ -31,4 +31,8 @@
     </div>
   {% endfor %}
 </div>
+<hr>
+  {% for num in articles.paginator.page_range %}
+    <a href="{% url 'articles:index' %}?page={{ num }}">{{ num }}</a>
+  {% endfor %}
 {% endblock %}

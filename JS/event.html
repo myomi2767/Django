@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>EventListener</h1>
+  <button>Click Me</button>
+  <script>
+      // 무엇?
+    const myButton = document.querySelector('button')
+      // 언제?
+    myButton.onclick = function() {
+      // 어떻게?
+      console.log("Click!!!!")
+    }
+
+    // onclick override 덮어쓰기
+    myButton.onclick = function() {
+      console.log("Click!!!! Click!!!!")
+    }
+  </script>
+</body>
+</html>
